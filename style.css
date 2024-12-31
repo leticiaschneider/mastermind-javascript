@@ -1,0 +1,19 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #e7e1d5;
+}
+
+/* Header */
+.main-header {
+    text-align: center;
+    padding-top: 40px;
+}
+
+.main-title {
+    font-size: 22px;
+}
