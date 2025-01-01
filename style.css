@@ -17,3 +17,22 @@ body {
 .main-title {
     font-size: 22px;
 }
+
+/* Footer */
+.main-footer {
+    background-color: #efeade;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.main-footer a {
+    color: #7c75bb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-footer a:hover {
+    text-decoration: underline;
+}
