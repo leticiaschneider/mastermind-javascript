@@ -58,6 +58,18 @@ body {
     background-color: lightgray;
 }
 
+/* Colors To Select */
+.colorsToSelect {
+    display: flex;
+    justify-content: space-around;
+}
+
+.colorsToSelect .circle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
 /* Footer */
 .main-footer {
     background-color: #efeade;
