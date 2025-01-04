@@ -8,6 +8,14 @@ body {
     background: #e7e1d5;
 }
 
+.container {
+    background-color: white;
+    width: 400px;
+    border-radius: 20px;
+    margin: 50px auto;
+    padding: 25px;
+}
+
 /* Header */
 .main-header {
     text-align: center;
@@ -19,15 +27,6 @@ body {
 }
 
 /* Board */
-
-.board {
-    background-color: white;
-    width: 400px;
-    border-radius: 20px;
-    margin: 50px auto;
-    padding: 25px;
-}
-
 .board_guess {
     display: flex;
     justify-content: space-around;
