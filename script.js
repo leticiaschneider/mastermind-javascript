@@ -84,3 +84,11 @@ window.addEventListener("click", (event) => {
     modal.style.display = "none";
   }
 });
+
+
+// -------- generate a random code --------
+const codeLength = 4;
+
+function generateCode() {
+  return Array.from({ length: codeLength }, () => colors[Math.floor(Math.random() * colors.length)]);
+}
