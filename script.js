@@ -31,7 +31,7 @@ const createBoardGuess = () => {
     // Line of circles
     const lineOfCircles = document.createElement('div');
     lineOfCircles.classList.add('line-of-circles');
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
         const circle = document.createElement('div');
         circle.classList.add('circle');
         lineOfCircles.appendChild(circle);
