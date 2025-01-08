@@ -60,6 +60,7 @@ for (let i = 0; i < repetitions; i++) {
         const hr = document.createElement('hr');
         hr.style.marginBottom = '20px';
         hr.style.marginTop = '20px';
+        hr.style.color = '#fff';
         boardSection.appendChild(hr);
     }
 }
