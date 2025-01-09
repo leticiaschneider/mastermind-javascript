@@ -94,6 +94,25 @@ body {
     border-radius: 50%;
 }
 
+.box-colors {
+    position: relative;
+    width: 735px;
+    margin: 0 auto;
+}
+
+.btn-guess {
+    font-size: 16px;
+    background-color: white;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 25px 19px;
+    font-weight: 600;
+    position: absolute;
+    right: 75px;
+    top: 7px;
+}
+
 /* Footer */
 .main-footer {
     background-color: #efeade;
@@ -173,7 +192,7 @@ body {
     font-size: 18px;
 }
 
-.modal-content > ul > li {
+.modal-content>ul>li {
     padding-bottom: 5px;
 }
 

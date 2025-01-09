@@ -65,6 +65,7 @@ for (let i = 0; i < repetitions; i++) {
     }
 }
 
+// -------- Modal --------
 const openModal = document.getElementById("openModal");
 const closeModal = document.getElementById("closeModal");
 const modal = document.getElementById("howToPlayModal");
