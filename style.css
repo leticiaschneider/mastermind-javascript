@@ -94,6 +94,12 @@ body {
     border-radius: 50%;
 }
 
+.colorsToSelect .circle:hover {
+    box-shadow: rgba(38, 38, 38, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border: 2px solid rgb(40, 40, 40);
+    cursor: pointer;
+}
+
 .box-colors {
     position: relative;
     width: 735px;
