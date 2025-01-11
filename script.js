@@ -8,15 +8,20 @@ const colorsContainer = document.querySelector('.colorsToSelect');
 
 // Ensure the container exists
 if (colorsContainer) {
-    // Dynamically create the circles
-    colors.forEach(color => {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        circle.style.backgroundColor = color;
-        colorsContainer.appendChild(circle); // Add each circle to the container
+  // Dynamically create the circles
+  colors.forEach(color => {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    circle.style.backgroundColor = color;
+
+    circle.addEventListener('click', () => {
+      handleCircleClick(color);
     });
+
+    colorsContainer.appendChild(circle); // Add each circle to the container
+  });
 } else {
-    console.error('Container ".colors" not found in the DOM.');
+  console.error('Container ".colors" not found in the DOM.');
 }
 
 
@@ -25,44 +30,44 @@ const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
 
 const createBoardGuess = () => {
-    const boardGuess = document.createElement('div');
-    boardGuess.classList.add('board_guess');
+  const boardGuess = document.createElement('div');
+  boardGuess.classList.add('board_guess');
 
-    // Line of circles
-    const lineOfCircles = document.createElement('div');
-    lineOfCircles.classList.add('line-of-circles');
-    for (let i = 0; i < 4; i++) {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        lineOfCircles.appendChild(circle);
-    }
-    boardGuess.appendChild(lineOfCircles);
+  // Line of circles
+  const lineOfCircles = document.createElement('div');
+  lineOfCircles.classList.add('line-of-circles');
+  for (let i = 0; i < 4; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    lineOfCircles.appendChild(circle);
+  }
+  boardGuess.appendChild(lineOfCircles);
 
-    // Grid of circles
-    const gridOfCircles = document.createElement('div');
-    gridOfCircles.classList.add('grid-of-circles');
-    for (let i = 0; i < 4; i++) {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        gridOfCircles.appendChild(circle);
-    }
-    boardGuess.appendChild(gridOfCircles);
+  // Grid of circles
+  const gridOfCircles = document.createElement('div');
+  gridOfCircles.classList.add('grid-of-circles');
+  for (let i = 0; i < 4; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    gridOfCircles.appendChild(circle);
+  }
+  boardGuess.appendChild(gridOfCircles);
 
-    return boardGuess;
+  return boardGuess;
 };
 
 for (let i = 0; i < repetitions; i++) {
-    
-    const boardGuess = createBoardGuess();
-    boardSection.appendChild(boardGuess);
-    
-    if (i < repetitions - 1) {
-        const hr = document.createElement('hr');
-        hr.style.marginBottom = '20px';
-        hr.style.marginTop = '20px';
-        hr.style.color = '#fff';
-        boardSection.appendChild(hr);
-    }
+
+  const boardGuess = createBoardGuess();
+  boardSection.appendChild(boardGuess);
+
+  if (i < repetitions - 1) {
+    const hr = document.createElement('hr');
+    hr.style.marginBottom = '20px';
+    hr.style.marginTop = '20px';
+    hr.style.color = '#fff';
+    boardSection.appendChild(hr);
+  }
 }
 
 // -------- Modal --------
@@ -93,4 +98,8 @@ const codeLength = 4;
 
 function generateCode() {
   return Array.from({ length: codeLength }, () => colors[Math.floor(Math.random() * colors.length)]);
+}
+
+function handleCircleClick() {
+  
 }
