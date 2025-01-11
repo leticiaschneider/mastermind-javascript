@@ -100,7 +100,7 @@ body {
     margin: 0 auto;
 }
 
-.btn-guess {
+.btn {
     font-size: 16px;
     background-color: white;
     outline: none;
@@ -108,19 +108,21 @@ body {
     border-radius: 20px;
     padding: 25px 19px;
     font-weight: 600;
+}
+
+.btn:hover {
+    background-color: rgb(189, 188, 203);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    cursor: pointer;
+}
+
+.btn-guess {
     position: absolute;
     right: 75px;
     top: 7px;
 }
 
 .btn-undo {
-    font-size: 16px;
-    background-color: white;
-    outline: none;
-    border: none;
-    border-radius: 20px;
-    padding: 25px 19px;
-    font-weight: 600;
     position: absolute;
     left: 75px;
     top: 7px;
