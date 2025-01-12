@@ -100,6 +100,9 @@ function generateCode() {
   return Array.from({ length: codeLength }, () => colors[Math.floor(Math.random() * colors.length)]);
 }
 
-function handleCircleClick() {
-  
+// -------- save code selected  --------
+const codeSelected = [];
+
+function handleCircleClick(color) {
+  console.log(color);
 }
