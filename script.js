@@ -4,7 +4,7 @@ const colors = ['red', 'blue', 'green', 'yellow', 'orange']; // Color palette
 const codeLength = 4;
 const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
-const codeSelected = [];
+const codeSelected = {};
 
 // -------- Defining selectable colors --------
 const colorsContainer = document.querySelector('.colorsToSelect'); // Select the container
@@ -101,5 +101,32 @@ function generateCode() {
 
 // -------- save code selected  --------
 function handleCircleClick(color) {
-  console.log(color);
+  let nGuess = Object.keys(codeSelected).length;
+  let currentGuessKey = `${nGuess + 1}guess`;
+
+  if (nGuess > 0) {
+    let lastGuessKey = `${nGuess}guess`;
+    if (codeSelected[lastGuessKey].length < 4) {
+      codeSelected[lastGuessKey].push(color);
+      fillCircles(lastGuessKey);
+      return;
+    }
+  }
+
+  if (!codeSelected[currentGuessKey]) {
+    codeSelected[currentGuessKey] = [];
+    codeSelected[currentGuessKey].push(color);
+    fillCircles(currentGuessKey); 
+  }
+}
+
+function fillCircles(key) {
+  const lineGuess = document.getElementsByClassName(key);
+
+  if (lineGuess.length > 0) {
+    const circles = lineGuess[0].getElementsByClassName('circle');
+    for (let i = 0; i < circles.length; i++) {
+      circles[i].style.backgroundColor = codeSelected[key][i];
+    }
+  }
 }
