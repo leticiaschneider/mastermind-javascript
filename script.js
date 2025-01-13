@@ -1,10 +1,13 @@
-// Color palette
-const colors = ['red', 'blue', 'green', 'yellow', 'orange'];
 
+// General Variables
+const colors = ['red', 'blue', 'green', 'yellow', 'orange']; // Color palette
+const codeLength = 4;
+const boardSection = document.querySelector('.board'); // Select the board
+const repetitions = 6;
+const codeSelected = [];
 
 // -------- Defining selectable colors --------
-// Select the container
-const colorsContainer = document.querySelector('.colorsToSelect');
+const colorsContainer = document.querySelector('.colorsToSelect'); // Select the container
 
 // Ensure the container exists
 if (colorsContainer) {
@@ -26,9 +29,6 @@ if (colorsContainer) {
 
 
 // -------- Creating board --------
-const boardSection = document.querySelector('.board'); // Select the board
-const repetitions = 6;
-
 const createBoardGuess = () => {
   const boardGuess = document.createElement('div');
   boardGuess.classList.add('board_guess');
@@ -59,6 +59,7 @@ const createBoardGuess = () => {
 for (let i = 0; i < repetitions; i++) {
 
   const boardGuess = createBoardGuess();
+  boardGuess.classList.add(`${repetitions - i}guess`);
   boardSection.appendChild(boardGuess);
 
   if (i < repetitions - 1) {
@@ -94,15 +95,11 @@ window.addEventListener("click", (event) => {
 
 
 // -------- generate a random code --------
-const codeLength = 4;
-
 function generateCode() {
   return Array.from({ length: codeLength }, () => colors[Math.floor(Math.random() * colors.length)]);
 }
 
 // -------- save code selected  --------
-const codeSelected = [];
-
 function handleCircleClick(color) {
   console.log(color);
 }
