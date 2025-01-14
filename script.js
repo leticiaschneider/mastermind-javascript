@@ -106,6 +106,11 @@ function handleCircleClick(color) {
 
   if (nGuess > 0) {
     let lastGuessKey = `${nGuess}guess`;
+
+    if (codeSelected[lastGuessKey].length >= 4) {
+      return;
+    }
+
     if (codeSelected[lastGuessKey].length < 4) {
       codeSelected[lastGuessKey].push(color);
       fillCircles(lastGuessKey);
