@@ -6,12 +6,30 @@ const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
 const codeSelected = {};
 
+// -------- Defining button event listener --------
+const undoButton = document.getElementById('undo_button');
+const guessButton = document.getElementById('guess_button');
+
+if (undoButton) {
+  undoButton.addEventListener('click', () => {
+    handleUndoClick();
+  });
+} else {
+  console.error('Button "#undo_button" not found in the DOM.');
+}
+
+if (guessButton) {
+  guessButton.addEventListener('click', () => {
+    handleGuessClick();
+  });
+} else {
+  console.error('Button "#guess_button" not found in the DOM.');
+}
+
 // -------- Defining selectable colors --------
 const colorsContainer = document.querySelector('.colorsToSelect'); // Select the container
 
-// Ensure the container exists
 if (colorsContainer) {
-  // Dynamically create the circles
   colors.forEach(color => {
     const circle = document.createElement('div');
     circle.classList.add('circle');
@@ -21,7 +39,7 @@ if (colorsContainer) {
       handleCircleClick(color);
     });
 
-    colorsContainer.appendChild(circle); // Add each circle to the container
+    colorsContainer.appendChild(circle);
   });
 } else {
   console.error('Container ".colors" not found in the DOM.');
@@ -121,7 +139,7 @@ function handleCircleClick(color) {
   if (!codeSelected[currentGuessKey]) {
     codeSelected[currentGuessKey] = [];
     codeSelected[currentGuessKey].push(color);
-    fillCircles(currentGuessKey); 
+    fillCircles(currentGuessKey);
   }
 }
 
@@ -134,4 +152,13 @@ function fillCircles(key) {
       circles[i].style.backgroundColor = codeSelected[key][i];
     }
   }
+}
+
+function handleGuessClick() {
+
+}
+
+
+function handleUndoClick() {
+
 }
