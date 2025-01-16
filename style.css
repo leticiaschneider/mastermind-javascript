@@ -86,6 +86,12 @@ body {
 .colorsToSelect {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    width: 330px;
+    border-radius: 20px;
+    padding: 25px;
+    background-color: white;
+    margin-bottom: 1rem;
 }
 
 .colorsToSelect .circle {
@@ -101,9 +107,23 @@ body {
 }
 
 .box-colors {
-    position: relative;
-    width: 735px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
+    gap: 1rem;
+    margin-bottom: 4rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: 330px;
 }
 
 .btn {
@@ -112,26 +132,16 @@ body {
     outline: none;
     border: none;
     border-radius: 20px;
-    padding: 25px 19px;
+    padding: 15px 19px;
     font-weight: 600;
+    flex: 1;
+    text-align: center;
 }
 
 .btn:hover {
     background-color: rgb(189, 188, 203);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
-}
-
-.btn-guess {
-    position: absolute;
-    right: 75px;
-    top: 7px;
-}
-
-.btn-undo {
-    position: absolute;
-    left: 75px;
-    top: 7px;
 }
 
 /* Footer */
