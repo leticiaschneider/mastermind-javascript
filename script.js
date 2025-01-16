@@ -148,8 +148,13 @@ function fillCircles(key) {
 
   if (lineGuess.length > 0) {
     const circles = lineGuess[0].getElementsByClassName('circle');
+    
     for (let i = 0; i < circles.length; i++) {
-      circles[i].style.backgroundColor = codeSelected[key][i];
+      if (codeSelected[key][i]) {
+        circles[i].style.backgroundColor = codeSelected[key][i];
+      } else {
+        circles[i].style.backgroundColor = '';
+      }
     }
   }
 }
@@ -160,5 +165,18 @@ function handleGuessClick() {
 
 
 function handleUndoClick() {
+  let nGuess = Object.keys(codeSelected).length;
 
+  if (nGuess > 0) {
+    let lastGuessKey = `${nGuess}guess`;
+
+    if (codeSelected[lastGuessKey].length > 0) {
+      codeSelected[lastGuessKey].pop();
+      fillCircles(lastGuessKey);
+    }
+
+    if (codeSelected[lastGuessKey].length === 0) {
+      delete codeSelected[lastGuessKey];
+    }
+  }
 }
