@@ -5,6 +5,7 @@ const codeLength = 4;
 const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
 const codeSelected = {};
+const secretCode = generateCode();
 
 // -------- Defining button event listener --------
 const undoButton = document.getElementById('undo_button');
@@ -148,7 +149,7 @@ function fillCircles(key) {
 
   if (lineGuess.length > 0) {
     const circles = lineGuess[0].getElementsByClassName('circle');
-    
+
     for (let i = 0; i < circles.length; i++) {
       if (codeSelected[key][i]) {
         circles[i].style.backgroundColor = codeSelected[key][i];
@@ -160,7 +161,47 @@ function fillCircles(key) {
 }
 
 function handleGuessClick() {
+  let nGuess = Object.keys(codeSelected).length;
+  let lastGuessKey = `${nGuess}guess`;
 
+  if (nGuess === 0 || !codeSelected[lastGuessKey] || codeSelected[lastGuessKey].length < 4) {
+    alert("Complete the current guess with 4 colors!");
+    return;
+  }
+
+  const feedback = getFeedback(codeSelected[lastGuessKey], secretCode);
+
+  if (nGuess < repetitions) {
+    const nextGuessKey = `${nGuess + 1}guess`;
+    codeSelected[nextGuessKey] = [];
+  } else {
+    alert("Game Over! You've used all attempts.");
+  }
+}
+
+function getFeedback(guess, code) {
+  const feedback = [];
+  const usedIndices = new Set();
+
+  guess.forEach((color, index) => {
+    if (code[index] === color) {
+      feedback.push("black");
+      usedIndices.add(index);
+    }
+  });
+
+  guess.forEach((color, guessIndex) => {
+    if (
+      code.includes(color) &&
+      !usedIndices.has(guessIndex) &&
+      code.findIndex((c, i) => c === color && !usedIndices.has(i)) !== -1
+    ) {
+      feedback.push("white");
+      usedIndices.add(code.findIndex((c, i) => c === color && !usedIndices.has(i)));
+    }
+  });
+
+  return feedback;
 }
 
 
