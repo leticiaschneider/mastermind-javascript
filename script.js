@@ -170,7 +170,8 @@ function handleGuessClick() {
   }
 
   const feedback = getFeedback(codeSelected[lastGuessKey], secretCode);
-
+  fillFeedbackCircles(lastGuessKey, feedback);
+  
   if (nGuess < repetitions) {
     const nextGuessKey = `${nGuess + 1}guess`;
     codeSelected[nextGuessKey] = [];
@@ -204,6 +205,20 @@ function getFeedback(guess, code) {
   return feedback;
 }
 
+function fillFeedbackCircles(key, feedback) {
+  const lineGuess = document.getElementsByClassName(key);
+  if (lineGuess.length > 0) {
+    const feedbackCircles = lineGuess[0].getElementsByClassName("grid-of-circles")[0].getElementsByClassName("circle");
+
+    for (let i = 0; i < feedbackCircles.length; i++) {
+      if (feedback[i]) {
+        feedbackCircles[i].style.backgroundColor = feedback[i] === "black" ? "black" : "white";
+      } else {
+        feedbackCircles[i].style.backgroundColor = "";
+      }
+    }
+  }
+}
 
 function handleUndoClick() {
   let nGuess = Object.keys(codeSelected).length;
