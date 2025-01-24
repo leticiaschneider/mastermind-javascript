@@ -1,6 +1,6 @@
 
 // General Variables
-const colors = ['red', 'blue', 'green', 'yellow', 'orange']; // Color palette
+const colors = ['#ED7788', '#7192be', '#7ab975', '#f4ed39', '#f5ac6a']; // Color palette
 const codeLength = 4;
 const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
@@ -213,6 +213,11 @@ function fillFeedbackCircles(key, feedback) {
     for (let i = 0; i < feedbackCircles.length; i++) {
       if (feedback[i]) {
         feedbackCircles[i].style.backgroundColor = feedback[i] === "black" ? "black" : "white";
+
+        if (feedbackCircles[i].style.backgroundColor === "white") {
+          feedbackCircles[i].style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
+        }
+
       } else {
         feedbackCircles[i].style.backgroundColor = "";
       }
@@ -229,10 +234,6 @@ function handleUndoClick() {
     if (codeSelected[lastGuessKey].length > 0) {
       codeSelected[lastGuessKey].pop();
       fillCircles(lastGuessKey);
-    }
-
-    if (codeSelected[lastGuessKey].length === 0) {
-      delete codeSelected[lastGuessKey];
     }
   }
 }
