@@ -1,203 +1,172 @@
-
 // General Variables
 const colors = ['#ED7788', '#7192be', '#7ab975', '#f4ed39', '#f5ac6a']; // Color palette
 const codeLength = 4;
-const boardSection = document.querySelector('.board'); // Select the board
 const repetitions = 6;
-const codeSelected = {};
-const secretCode = generateCode();
+const boardSection = document.querySelector('.board'); // Select the board
+const codeSelected = {}; // Store user guesses
+const secretCode = generateCode(); // Generate secret code
 
-// -------- Defining button event listener --------
+// -------- Constants for feedback --------
+const FEEDBACK_COLORS = {
+  correct: 'black',
+  wrongPosition: 'white',
+};
+
+// -------- Button Event Listeners --------
 const undoButton = document.getElementById('undo_button');
 const guessButton = document.getElementById('guess_button');
 
 if (undoButton) {
-  undoButton.addEventListener('click', () => {
-    handleUndoClick();
-  });
+  undoButton.addEventListener('click', handleUndoClick);
 } else {
   console.error('Button "#undo_button" not found in the DOM.');
 }
 
 if (guessButton) {
-  guessButton.addEventListener('click', () => {
-    handleGuessClick();
-  });
+  guessButton.addEventListener('click', handleGuessClick);
 } else {
   console.error('Button "#guess_button" not found in the DOM.');
 }
 
-// -------- Defining selectable colors --------
-const colorsContainer = document.querySelector('.colorsToSelect'); // Select the container
+// -------- Color Selection Setup --------
+const colorsContainer = document.querySelector('.colorsToSelect');
 
 if (colorsContainer) {
   colors.forEach(color => {
     const circle = document.createElement('div');
     circle.classList.add('circle');
     circle.style.backgroundColor = color;
-
-    circle.addEventListener('click', () => {
-      handleCircleClick(color);
-    });
-
+    circle.addEventListener('click', () => handleCircleClick(color));
     colorsContainer.appendChild(circle);
   });
 } else {
-  console.error('Container ".colors" not found in the DOM.');
+  console.error('Container ".colorsToSelect" not found in the DOM.');
 }
 
-
-// -------- Creating board --------
-const createBoardGuess = () => {
-  const boardGuess = document.createElement('div');
-  boardGuess.classList.add('board_guess');
-
-  // Line of circles
-  const lineOfCircles = document.createElement('div');
-  lineOfCircles.classList.add('line-of-circles');
-  for (let i = 0; i < 4; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('circle');
-    lineOfCircles.appendChild(circle);
-  }
-  boardGuess.appendChild(lineOfCircles);
-
-  // Grid of circles
-  const gridOfCircles = document.createElement('div');
-  gridOfCircles.classList.add('grid-of-circles');
-  for (let i = 0; i < 4; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('circle');
-    gridOfCircles.appendChild(circle);
-  }
-  boardGuess.appendChild(gridOfCircles);
-
-  return boardGuess;
-};
-
+// -------- Board Creation --------
 for (let i = 0; i < repetitions; i++) {
-
   const boardGuess = createBoardGuess();
   boardGuess.classList.add(`${repetitions - i}guess`);
   boardSection.appendChild(boardGuess);
 
   if (i < repetitions - 1) {
     const hr = document.createElement('hr');
-    hr.style.marginBottom = '20px';
-    hr.style.marginTop = '20px';
+    hr.style.margin = '20px 0';
     hr.style.color = '#fff';
     boardSection.appendChild(hr);
   }
 }
 
-// -------- Modal --------
-const openModal = document.getElementById("openModal");
-const closeModal = document.getElementById("closeModal");
-const modal = document.getElementById("howToPlayModal");
+// -------- Modal Setup --------
+const openModal = document.getElementById('openModal');
+const closeModal = document.getElementById('closeModal');
+const modal = document.getElementById('howToPlayModal');
 
-// Open modal
-openModal.addEventListener("click", () => {
-  modal.style.display = "block";
-});
+if (openModal && closeModal && modal) {
+  openModal.addEventListener('click', () => (modal.style.display = 'block'));
+  closeModal.addEventListener('click', () => (modal.style.display = 'none'));
+  window.addEventListener('click', event => {
+    if (event.target === modal) modal.style.display = 'none';
+  });
+}
 
-// Close modal
-closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+// -------- Function Definitions --------
 
-// Close modal when clicking outside of it
-window.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-});
-
-
-// -------- generate a random code --------
+/**
+ * Generate a random secret code.
+ * @returns {string[]} Array of colors representing the code.
+ */
 function generateCode() {
   return Array.from({ length: codeLength }, () => colors[Math.floor(Math.random() * colors.length)]);
 }
 
-// -------- save code selected  --------
+/**
+ * Handle clicks on color circles.
+ * @param {string} color - Selected color.
+ */
 function handleCircleClick(color) {
-  let nGuess = Object.keys(codeSelected).length;
-  let currentGuessKey = `${nGuess + 1}guess`;
+  const nGuess = Object.keys(codeSelected).length;
+  const currentGuessKey = `${nGuess + 1}guess`;
 
   if (nGuess > 0) {
-    let lastGuessKey = `${nGuess}guess`;
+    const lastGuessKey = `${nGuess}guess`;
 
-    if (codeSelected[lastGuessKey].length >= 4) {
-      return;
-    }
+    if (codeSelected[lastGuessKey].length >= codeLength) return;
 
-    if (codeSelected[lastGuessKey].length < 4) {
-      codeSelected[lastGuessKey].push(color);
-      fillCircles(lastGuessKey);
-      return;
-    }
+    codeSelected[lastGuessKey].push(color);
+    fillCircles(lastGuessKey);
+    return;
   }
 
   if (!codeSelected[currentGuessKey]) {
-    codeSelected[currentGuessKey] = [];
-    codeSelected[currentGuessKey].push(color);
+    codeSelected[currentGuessKey] = [color];
     fillCircles(currentGuessKey);
   }
 }
 
+/**
+ * Fill the circles with selected colors.
+ * @param {string} key - Current guess key.
+ */
 function fillCircles(key) {
   const lineGuess = document.getElementsByClassName(key);
-
   if (lineGuess.length > 0) {
     const circles = lineGuess[0].getElementsByClassName('circle');
-
     for (let i = 0; i < circles.length; i++) {
-      if (codeSelected[key][i]) {
-        circles[i].style.backgroundColor = codeSelected[key][i];
-      } else {
-        circles[i].style.backgroundColor = '';
-      }
+      circles[i].style.backgroundColor = codeSelected[key][i] || '';
     }
   }
 }
 
+/**
+ * Handle guess submission.
+ */
 function handleGuessClick() {
-  let nGuess = Object.keys(codeSelected).length;
-  let lastGuessKey = `${nGuess}guess`;
+  const nGuess = Object.keys(codeSelected).length;
+  const lastGuessKey = `${nGuess}guess`;
 
-  if (nGuess === 0 || !codeSelected[lastGuessKey] || codeSelected[lastGuessKey].length < 4) {
-    alert("Complete the current guess with 4 colors!");
+  if (!codeSelected[lastGuessKey] || codeSelected[lastGuessKey].length < codeLength) {
+    alert('Complete the current guess with 4 colors!');
     return;
   }
 
   const feedback = getFeedback(codeSelected[lastGuessKey], secretCode);
   fillFeedbackCircles(lastGuessKey, feedback);
-  
+
   if (nGuess < repetitions) {
     const nextGuessKey = `${nGuess + 1}guess`;
     codeSelected[nextGuessKey] = [];
   } else {
-    alert("Game Over! You've used all attempts.");
+    alert('Game Over! You\'ve used all attempts.');
   }
 }
 
+/**
+ * Generate feedback for the current guess.
+ * @param {string[]} guess - User guess.
+ * @param {string[]} code - Secret code.
+ * @returns {string[]} Feedback array.
+ */
 function getFeedback(guess, code) {
   const feedback = [];
   const usedIndices = new Set();
 
+  // Correct positions
   guess.forEach((color, index) => {
     if (code[index] === color) {
-      feedback.push("black");
+      feedback.push(FEEDBACK_COLORS.correct);
       usedIndices.add(index);
     }
   });
 
+  // Correct colors, wrong positions
   guess.forEach((color, guessIndex) => {
     if (
       code.includes(color) &&
       !usedIndices.has(guessIndex) &&
       code.findIndex((c, i) => c === color && !usedIndices.has(i)) !== -1
     ) {
-      feedback.push("white");
+      feedback.push(FEEDBACK_COLORS.wrongPosition);
       usedIndices.add(code.findIndex((c, i) => c === color && !usedIndices.has(i)));
     }
   });
@@ -205,35 +174,65 @@ function getFeedback(guess, code) {
   return feedback;
 }
 
+/**
+ * Fill feedback circles based on feedback.
+ * @param {string} key - Current guess key.
+ * @param {string[]} feedback - Feedback array.
+ */
 function fillFeedbackCircles(key, feedback) {
   const lineGuess = document.getElementsByClassName(key);
   if (lineGuess.length > 0) {
-    const feedbackCircles = lineGuess[0].getElementsByClassName("grid-of-circles")[0].getElementsByClassName("circle");
-
+    const feedbackCircles = lineGuess[0].getElementsByClassName('grid-of-circles')[0].getElementsByClassName('circle');
     for (let i = 0; i < feedbackCircles.length; i++) {
-      if (feedback[i]) {
-        feedbackCircles[i].style.backgroundColor = feedback[i] === "black" ? "black" : "white";
-
-        if (feedbackCircles[i].style.backgroundColor === "white") {
-          feedbackCircles[i].style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
-        }
-
-      } else {
-        feedbackCircles[i].style.backgroundColor = "";
+      feedbackCircles[i].style.backgroundColor = feedback[i] || '';
+      if (feedback[i] === FEEDBACK_COLORS.wrongPosition) {
+        feedbackCircles[i].style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
       }
     }
   }
 }
 
+/**
+ * Undo the last color selection.
+ */
 function handleUndoClick() {
-  let nGuess = Object.keys(codeSelected).length;
-
+  const nGuess = Object.keys(codeSelected).length;
   if (nGuess > 0) {
-    let lastGuessKey = `${nGuess}guess`;
-
+    const lastGuessKey = `${nGuess}guess`;
     if (codeSelected[lastGuessKey].length > 0) {
       codeSelected[lastGuessKey].pop();
       fillCircles(lastGuessKey);
     }
   }
+}
+
+/**
+ * Create a board guess element.
+ * @returns {HTMLElement} Board guess element.
+ */
+function createBoardGuess() {
+  const boardGuess = document.createElement('div');
+  boardGuess.classList.add('board_guess');
+
+  // Line of circles
+  const lineOfCircles = document.createElement('div');
+  lineOfCircles.classList.add('line-of-circles');
+  for (let i = 0; i < codeLength; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    lineOfCircles.appendChild(circle);
+  }
+  boardGuess.appendChild(lineOfCircles);
+
+  // Grid of circles for feedback
+  const gridOfCircles = document.createElement('div');
+  gridOfCircles.classList.add('grid-of-circles');
+  for (let i = 0; i < codeLength; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    gridOfCircles.appendChild(circle);
+  }
+  boardGuess.appendChild(gridOfCircles);
+
+  return boardGuess;
 }
