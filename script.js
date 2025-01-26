@@ -242,6 +242,11 @@ function createBoardGuess() {
   return boardGuess;
 }
 
+/**
+ * Updates the active guess on the board by toggling the 'active-guess' class.
+ * 
+ * @param {string} nGuess - The class name of the current guess to activate.
+ */
 function updateActiveGuess(nGuess) {
   const allGuesses = document.querySelectorAll('.board_guess');
   allGuesses.forEach(guess => guess.classList.remove('active-guess'));
