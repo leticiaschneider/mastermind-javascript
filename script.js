@@ -242,12 +242,12 @@ function createBoardGuess() {
   return boardGuess;
 }
 
-// function updateActiveGuess(nGuess) {
-//   const allGuesses = document.querySelectorAll('.board_guess');
-//   allGuesses.forEach(guess => guess.classList.remove('active-guess'));
+function updateActiveGuess(nGuess) {
+  const allGuesses = document.querySelectorAll('.board_guess');
+  allGuesses.forEach(guess => guess.classList.remove('active-guess'));
 
-//   const currentGuess = document.querySelector(`.${nGuess}`);
-//   if (currentGuess) {
-//     currentGuess.classList.add('active-guess');
-//   }
-// }
+  const currentGuess = document.querySelector(`.${nGuess}`);
+  if (currentGuess) {
+    currentGuess.classList.add('active-guess');
+  }
+}
