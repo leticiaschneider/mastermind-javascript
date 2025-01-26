@@ -136,6 +136,7 @@ function handleGuessClick() {
   if (nGuess < repetitions) {
     const nextGuessKey = `${nGuess + 1}guess`;
     codeSelected[nextGuessKey] = [];
+    updateActiveGuess(nextGuessKey);
   } else {
     alert('Game Over! You\'ve used all attempts.');
   }
@@ -214,6 +215,10 @@ function createBoardGuess() {
   const boardGuess = document.createElement('div');
   boardGuess.classList.add('board_guess');
 
+  const arrow = document.createElement('div');
+  arrow.classList.add('arrow');
+  boardGuess.appendChild(arrow);
+
   // Line of circles
   const lineOfCircles = document.createElement('div');
   lineOfCircles.classList.add('line-of-circles');
@@ -235,4 +240,14 @@ function createBoardGuess() {
   boardGuess.appendChild(gridOfCircles);
 
   return boardGuess;
+}
+
+function updateActiveGuess(nGuess) {
+  const allGuesses = document.querySelectorAll('.board_guess');
+  allGuesses.forEach(guess => guess.classList.remove('active-guess'));
+  
+  const currentGuess = document.querySelector(`.${nGuess}guess`);
+  if (currentGuess) {
+    currentGuess.classList.add('active-guess');
+  }
 }

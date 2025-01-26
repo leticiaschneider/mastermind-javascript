@@ -57,6 +57,32 @@ body {
     justify-content: space-around;
 }
 
+.board_guess {
+    position: relative;
+    margin-bottom: 20px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    align-items: center;
+}
+
+.arrow {
+    display: none;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #7c75bb;
+  }
+  
+
+.board_guess.active-guess .arrow {
+    display: block;
+}
+
 .line-of-circles {
     display: flex;
     gap: 10px;
