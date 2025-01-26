@@ -46,7 +46,7 @@ if (colorsContainer) {
 // -------- Board Creation --------
 for (let i = 0; i < repetitions; i++) {
   const boardGuess = createBoardGuess();
-  boardGuess.classList.add(`${repetitions - i}guess`);
+  boardGuess.classList.add(`guess-${repetitions - i}`);
   boardSection.appendChild(boardGuess);
 
   if (i < repetitions - 1) {
@@ -86,10 +86,10 @@ function generateCode() {
  */
 function handleCircleClick(color) {
   const nGuess = Object.keys(codeSelected).length;
-  const currentGuessKey = `${nGuess + 1}guess`;
+  const currentGuessKey = `guess-${nGuess + 1}`;
 
   if (nGuess > 0) {
-    const lastGuessKey = `${nGuess}guess`;
+    const lastGuessKey = `guess-${nGuess}`;
 
     if (codeSelected[lastGuessKey].length >= codeLength) return;
 
@@ -123,7 +123,7 @@ function fillCircles(key) {
  */
 function handleGuessClick() {
   const nGuess = Object.keys(codeSelected).length;
-  const lastGuessKey = `${nGuess}guess`;
+  const lastGuessKey = `guess-${nGuess}`;
 
   if (!codeSelected[lastGuessKey] || codeSelected[lastGuessKey].length < codeLength) {
     alert('Complete the current guess with 4 colors!');
@@ -134,7 +134,7 @@ function handleGuessClick() {
   fillFeedbackCircles(lastGuessKey, feedback);
 
   if (nGuess < repetitions) {
-    const nextGuessKey = `${nGuess + 1}guess`;
+    const nextGuessKey = `guess-${nGuess + 1}`;
     codeSelected[nextGuessKey] = [];
     updateActiveGuess(nextGuessKey);
   } else {
@@ -199,7 +199,7 @@ function fillFeedbackCircles(key, feedback) {
 function handleUndoClick() {
   const nGuess = Object.keys(codeSelected).length;
   if (nGuess > 0) {
-    const lastGuessKey = `${nGuess}guess`;
+    const lastGuessKey = `guess-${nGuess}`;
     if (codeSelected[lastGuessKey].length > 0) {
       codeSelected[lastGuessKey].pop();
       fillCircles(lastGuessKey);
@@ -242,12 +242,12 @@ function createBoardGuess() {
   return boardGuess;
 }
 
-function updateActiveGuess(nGuess) {
-  const allGuesses = document.querySelectorAll('.board_guess');
-  allGuesses.forEach(guess => guess.classList.remove('active-guess'));
-  
-  const currentGuess = document.querySelector(`.${nGuess}guess`);
-  if (currentGuess) {
-    currentGuess.classList.add('active-guess');
-  }
-}
+// function updateActiveGuess(nGuess) {
+//   const allGuesses = document.querySelectorAll('.board_guess');
+//   allGuesses.forEach(guess => guess.classList.remove('active-guess'));
+
+//   const currentGuess = document.querySelector(`.${nGuess}`);
+//   if (currentGuess) {
+//     currentGuess.classList.add('active-guess');
+//   }
+// }
