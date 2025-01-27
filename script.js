@@ -5,6 +5,8 @@ const repetitions = 6;
 const boardSection = document.querySelector('.board'); // Select the board
 const codeSelected = {}; // Store user guesses
 const secretCode = generateCode(); // Generate secret code
+console.log(secretCode);
+let hasGuessedCorrectly = false;
 
 // -------- Constants for feedback --------
 const FEEDBACK_COLORS = {
@@ -31,7 +33,7 @@ if (guessButton) {
 // -------- Color Selection Setup --------
 const colorsContainer = document.querySelector('.colorsToSelect');
 
-if (colorsContainer) {
+if (colorsContainer && !hasGuessedCorrectly) {
   colors.forEach(color => {
     const circle = document.createElement('div');
     circle.classList.add('circle');
@@ -132,8 +134,14 @@ function handleGuessClick() {
 
   const feedback = getFeedback(codeSelected[lastGuessKey], secretCode);
   fillFeedbackCircles(lastGuessKey, feedback);
+  if (feedback.filter(item => item === "black").length == 4) {
+    alert("Well done! You've cracked the code!");
+    hasGuessedCorrectly = true;
+    return;
+  }
 
-  if (nGuess < repetitions) {
+
+  if (nGuess < repetitions && !hasGuessedCorrectly) {
     const nextGuessKey = `guess-${nGuess + 1}`;
     codeSelected[nextGuessKey] = [];
     updateActiveGuess(nextGuessKey);
@@ -198,7 +206,7 @@ function fillFeedbackCircles(key, feedback) {
  */
 function handleUndoClick() {
   const nGuess = Object.keys(codeSelected).length;
-  if (nGuess > 0) {
+  if (nGuess > 0 && !hasGuessedCorrectly) {
     const lastGuessKey = `guess-${nGuess}`;
     if (codeSelected[lastGuessKey].length > 0) {
       codeSelected[lastGuessKey].pop();
