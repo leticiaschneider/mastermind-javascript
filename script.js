@@ -206,12 +206,15 @@ function fillFeedbackCircles(key, feedback) {
  */
 function handleUndoClick() {
   const nGuess = Object.keys(codeSelected).length;
-  if (nGuess > 0 && !hasGuessedCorrectly) {
-    const lastGuessKey = `guess-${nGuess}`;
-    if (codeSelected[lastGuessKey].length > 0) {
-      codeSelected[lastGuessKey].pop();
-      fillCircles(lastGuessKey);
-    }
+  const lastGuessKey = `guess-${nGuess}`;
+
+  if (nGuess >= 6 || hasGuessedCorrectly) {
+    return;
+  }
+
+  if (codeSelected[lastGuessKey]?.length > 0) {
+    codeSelected[lastGuessKey].pop();
+    fillCircles(lastGuessKey);
   }
 }
 
