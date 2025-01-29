@@ -170,6 +170,10 @@ body {
     cursor: pointer;
 }
 
+.btn-reset {
+    margin-top: 20px;
+}
+
 /* Footer */
 .main-footer {
     background-color: #efeade;
