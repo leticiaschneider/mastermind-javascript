@@ -59,6 +59,8 @@ for (let i = 0; i < repetitions; i++) {
   }
 }
 
+updateActiveGuess("guess-1");
+
 // -------- Modal Setup --------
 const openModal = document.getElementById('openModal');
 const closeModal = document.getElementById('closeModal');
