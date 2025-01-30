@@ -17,6 +17,7 @@ const FEEDBACK_COLORS = {
 // -------- Button Event Listeners --------
 const undoButton = document.getElementById('undo_button');
 const guessButton = document.getElementById('guess_button');
+const resetButton = document.getElementById('reset_button');
 
 if (undoButton) {
   undoButton.addEventListener('click', handleUndoClick);
@@ -28,6 +29,12 @@ if (guessButton) {
   guessButton.addEventListener('click', handleGuessClick);
 } else {
   console.error('Button "#guess_button" not found in the DOM.');
+}
+
+if (resetButton) {
+  guessButton.addEventListener('click', handleResetClick);
+} else {
+  console.error('Button "#resetButton" not found in the DOM.');
 }
 
 // -------- Color Selection Setup --------
@@ -268,4 +275,9 @@ function updateActiveGuess(nGuess) {
   if (currentGuess) {
     currentGuess.classList.add('active-guess');
   }
+}
+
+
+function handleResetClick() {
+  
 }
