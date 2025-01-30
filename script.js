@@ -32,7 +32,7 @@ if (guessButton) {
 }
 
 if (resetButton) {
-  guessButton.addEventListener('click', handleResetClick);
+  resetButton.addEventListener('click', handleResetClick);
 } else {
   console.error('Button "#resetButton" not found in the DOM.');
 }
@@ -277,7 +277,6 @@ function updateActiveGuess(nGuess) {
   }
 }
 
-
 function handleResetClick() {
-  
+  updateActiveGuess("guess-1");
 }
