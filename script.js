@@ -277,6 +277,26 @@ function updateActiveGuess(nGuess) {
   }
 }
 
+/**
+ * Handle the reset action by clearing all guesses, generating a new secret code,
+ * resetting the game state, and reactivating color selection.
+ */
 function handleResetClick() {
+  Object.keys(codeSelected).forEach(key => delete codeSelected[key]);
+
+  secretCode.length = 0;
+  secretCode.push(...generateCode());
+  hasGuessedCorrectly = false;
+  
+  const allGuesses = document.querySelectorAll('.board_guess');
+  allGuesses.forEach(guess => {
+    guess.classList.remove('active-guess');
+    const circles = guess.querySelectorAll('.line-of-circles .circle');
+    circles.forEach(circle => (circle.style.backgroundColor = ''));
+
+    const feedbackCircles = guess.querySelectorAll('.grid-of-circles .circle');
+    feedbackCircles.forEach(circle => (circle.style.backgroundColor = ''));
+  });
+
   updateActiveGuess("guess-1");
 }
