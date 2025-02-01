@@ -5,7 +5,6 @@ const repetitions = 6;
 const boardSection = document.querySelector('.board'); // Select the board
 const codeSelected = {}; // Store user guesses
 const secretCode = generateCode(); // Generate secret code
-console.log(secretCode);
 let hasGuessedCorrectly = false;
 
 // -------- Constants for feedback --------
@@ -146,15 +145,16 @@ function handleGuessClick() {
   if (feedback.filter(item => item === "black").length == 4) {
     alert("Well done! You've cracked the code!");
     hasGuessedCorrectly = true;
+    showSecretCode();
     return;
   }
-
 
   if (nGuess < repetitions && !hasGuessedCorrectly) {
     const nextGuessKey = `guess-${nGuess + 1}`;
     codeSelected[nextGuessKey] = [];
     updateActiveGuess(nextGuessKey);
   } else {
+    showSecretCode();
     alert('Game Over! You\'ve used all attempts.');
   }
 }
@@ -287,7 +287,7 @@ function handleResetClick() {
   secretCode.length = 0;
   secretCode.push(...generateCode());
   hasGuessedCorrectly = false;
-  
+
   const allGuesses = document.querySelectorAll('.board_guess');
   allGuesses.forEach(guess => {
     guess.classList.remove('active-guess');
@@ -299,4 +299,22 @@ function handleResetClick() {
   });
 
   updateActiveGuess("guess-1");
+
+  const sectionSecretCode = document.querySelector('.box-secret-code');
+  sectionSecretCode.style.display = 'none';
+}
+
+
+function showSecretCode() {
+  const sectionSecretCode = document.querySelector('.box-secret-code');
+  sectionSecretCode.innerHTML = '';
+
+  secretCode.forEach(color => {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    circle.style.backgroundColor = color;
+    sectionSecretCode.appendChild(circle);
+  });
+
+  sectionSecretCode.style.display = 'flex';
 }
