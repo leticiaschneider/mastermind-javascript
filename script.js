@@ -304,7 +304,10 @@ function handleResetClick() {
   sectionSecretCode.style.display = 'none';
 }
 
-
+/**
+ * Displays the secret code by creating colored circles inside the `.box-secret-code` section.
+ * This function is called when the player correctly guesses the code or when all attempts are used.
+ */
 function showSecretCode() {
   const sectionSecretCode = document.querySelector('.box-secret-code');
   sectionSecretCode.innerHTML = '';
