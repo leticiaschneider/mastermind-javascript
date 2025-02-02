@@ -5,7 +5,7 @@ const repetitions = 6;
 const boardSection = document.querySelector('.board'); // Select the board
 const codeSelected = {}; // Store user guesses
 const secretCode = generateCode(); // Generate secret code
-let hasGuessedCorrectly = false;
+let isGameOver = false;
 
 // -------- Constants for feedback --------
 const FEEDBACK_COLORS = {
@@ -39,7 +39,7 @@ if (resetButton) {
 // -------- Color Selection Setup --------
 const colorsContainer = document.querySelector('.colorsToSelect');
 
-if (colorsContainer && !hasGuessedCorrectly) {
+if (colorsContainer && !isGameOver) {
   colors.forEach(color => {
     const circle = document.createElement('div');
     circle.classList.add('circle');
@@ -144,16 +144,17 @@ function handleGuessClick() {
   fillFeedbackCircles(lastGuessKey, feedback);
   if (feedback.filter(item => item === "black").length == 4) {
     alert("Well done! You've cracked the code!");
-    hasGuessedCorrectly = true;
+    isGameOver = true;
     showSecretCode();
     return;
   }
 
-  if (nGuess < repetitions && !hasGuessedCorrectly) {
+  if (nGuess < repetitions && !isGameOver) {
     const nextGuessKey = `guess-${nGuess + 1}`;
     codeSelected[nextGuessKey] = [];
     updateActiveGuess(nextGuessKey);
   } else {
+    isGameOver = true;
     showSecretCode();
     alert('Game Over! You\'ve used all attempts.');
   }
@@ -217,7 +218,7 @@ function handleUndoClick() {
   const nGuess = Object.keys(codeSelected).length;
   const lastGuessKey = `guess-${nGuess}`;
 
-  if (nGuess >= 6 || hasGuessedCorrectly) {
+  if (nGuess > 7 || isGameOver || ( codeSelected[`guess-${repetitions}`]?.length === 4 && isGameOver)) {
     return;
   }
 
@@ -286,7 +287,7 @@ function handleResetClick() {
 
   secretCode.length = 0;
   secretCode.push(...generateCode());
-  hasGuessedCorrectly = false;
+  isGameOver = false;
 
   const allGuesses = document.querySelectorAll('.board_guess');
   allGuesses.forEach(guess => {
