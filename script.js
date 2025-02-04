@@ -167,31 +167,33 @@ function handleGuessClick() {
  * @returns {string[]} Feedback array.
  */
 function getFeedback(guess, code) {
-  const feedback = new Array(guess.length).fill(null);
+  const feedback = [];
   const usedIndices = new Set();
 
-  // Correct positions
   guess.forEach((color, index) => {
     if (code[index] === color) {
-      feedback[index] = FEEDBACK_COLORS.correct;
+      feedback.push(FEEDBACK_COLORS.correct);
       usedIndices.add(index);
     }
   });
 
-  // Correct colors, wrong positions
   guess.forEach((color, guessIndex) => {
-    if (feedback[guessIndex] === FEEDBACK_COLORS.correct) return;
-
-    const correctIndex = code.findIndex((c, i) => c === color && !usedIndices.has(i));
-    
-    if (correctIndex !== -1) {
-      feedback[guessIndex] = FEEDBACK_COLORS.wrongPosition;
-      usedIndices.add(correctIndex);
+    if (code[guessIndex] !== color) {
+      const correctIndex = code.findIndex((c, i) => c === color && !usedIndices.has(i));
+      if (correctIndex !== -1) {
+        feedback.push(FEEDBACK_COLORS.wrongPosition);
+        usedIndices.add(correctIndex);
+      }
     }
   });
 
+  while (feedback.length < codeLength) {
+    feedback.push(null);
+  }
+
   return feedback;
 }
+
 
 /**
  * Fill feedback circles based on feedback.
